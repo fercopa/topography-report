@@ -1,3 +1,8 @@
+# Files junk
+src/icons_rc
+src/input
+src/output
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

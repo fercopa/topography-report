@@ -1,0 +1,10 @@
+<RCC>
+  <qresource prefix="icons/">
+    <file>save_as-128.png</file>
+    <file>floppy-128.png</file>
+    <file>edit-file.png</file>
+    <file>new-file.png</file>
+    <file>open-file.png</file>
+    <file>pdf.png</file>
+  </qresource>
+</RCC>
