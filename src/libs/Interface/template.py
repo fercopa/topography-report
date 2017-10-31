@@ -342,4 +342,4 @@ class Ui_MainWindow(object):
         self.actionOpen.setToolTip(_translate("MainWindow", "Abrir archivo", None))
         self.actionOpen.setShortcut(_translate("MainWindow", "Ctrl+O", None))
 
-import icons_rc
+# import icons_rc

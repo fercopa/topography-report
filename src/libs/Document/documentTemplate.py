@@ -169,9 +169,10 @@ class Document:
             d2, m2, s2 = p.decdeg2dms(data['azimuths'][i])
             x, y = data['coords'][i]
             b = "{0: .2f}".format(data['edges'][i])
-            row = [i, int(d1), int(m1), '{0:.2f}'.format(s1),
-                   int(d2), int(m2), '{0:.2f}'.format(s2),
-                   b, i, str(x), str(y)]
+            # row = [data['vertices'][i], int(d1), int(m1), '{0:.2f}'.format(s1),
+            row = [data['vertices'][i], int(d1), int(m1), int(round(s1)),
+                   int(d2), int(m2), int(round(s2)),
+                   b, data['vertices'][i], str(x), str(y)]
             datas.append(row)
         styleT = [
                     ('BOX', (0, 0), (-1, -1), 2, colors.black),

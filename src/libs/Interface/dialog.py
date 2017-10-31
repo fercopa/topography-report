@@ -36,6 +36,22 @@ class Ui_Dialog(object):
         self.widget.setObjectName(_fromUtf8("widget"))
         self.verticalLayout = QtGui.QVBoxLayout(self.widget)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
+        #
+        self.horizontalLayout_1 = QtGui.QHBoxLayout()
+        self.horizontalLayout_1.setObjectName(_fromUtf8("horizontalLayout_1"))
+        self.label_1 = QtGui.QLabel(self.widget)
+        font = QtGui.QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        self.label_1.setFont(font)
+        self.label_1.setObjectName(_fromUtf8("label_1"))
+        self.horizontalLayout_1.addWidget(self.label_1)
+        self.perito = QtGui.QLineEdit(self.widget)
+        self.perito.setObjectName(_fromUtf8("perito"))
+        self.perito.setText("Ing. COPA, Rodi Alfredo")
+        self.horizontalLayout_1.addWidget(self.perito)
+        self.verticalLayout.addLayout(self.horizontalLayout_1)
+        #
         self.horizontalLayout_5 = QtGui.QHBoxLayout()
         self.horizontalLayout_5.setObjectName(_fromUtf8("horizontalLayout_5"))
         self.label = QtGui.QLabel(self.widget)
@@ -49,6 +65,7 @@ class Ui_Dialog(object):
         self.plane_of.setObjectName(_fromUtf8("plane_of"))
         self.horizontalLayout_5.addWidget(self.plane_of)
         self.verticalLayout.addLayout(self.horizontalLayout_5)
+        #
         self.horizontalLayout_4 = QtGui.QHBoxLayout()
         self.horizontalLayout_4.setObjectName(_fromUtf8("horizontalLayout_4"))
         self.label_2 = QtGui.QLabel(self.widget)
@@ -130,6 +147,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(_translate("Dialog", "Formulario", None))
+        self.label_1.setText(_translate("Dialog", "Perito:", None))
         self.label.setText(_translate("Dialog", "Plano de:", None))
         self.label_2.setText(_translate("Dialog", "Ubicación:", None))
         self.label_3.setText(_translate("Dialog", "Propiedad:", None))

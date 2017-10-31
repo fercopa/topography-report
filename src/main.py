@@ -80,6 +80,7 @@ class MainWindow(Ui_MainWindow):
             d = Document()
             self.data['title'] = "<u>PLANILLA DE CÁLCULO DE \
                 COORDENADAS Y SUPERFICIE</u>"
+            self.get_vertices()
             d.save(f, self.data)
 
     def calculate(self):
@@ -97,6 +98,7 @@ class MainWindow(Ui_MainWindow):
                 self.data['perim'] = sum(self.data['edges'])
             if self.data['angs']:
                 self.data['sum_angs'] = sum(self.data['angs'])
+            self.get_vertices()
             self.show_data()
 
     def get_coords(self):
@@ -110,8 +112,18 @@ class MainWindow(Ui_MainWindow):
             coordinates.append((x, y))
         return coordinates
 
+    def get_vertices(self):
+        n = self.tableResult.rowCount()
+        self.data['vertices'] = []
+        for i in range(n):
+            vert = str(self.tableResult.item(i, T_VERT).text())
+            self.data['vertices'].append(vert)
+
     def show_data(self):
+        # self.get_vertices()
         self.clear_table()
+        # print "VERTICES", self.data['vertices']
+        self.perito.setText(self.data["proficient"])
         self.plane_of.setText(self.data['plane_of'])
         self.location.setText(self.data['location'])
         self.possession.setText(self.data['possession'])
@@ -127,17 +139,23 @@ class MainWindow(Ui_MainWindow):
                                          QtGui.QTableWidgetItem(str(x)))
                 self.tableResult.setItem(i, T_COORD_Y,
                                          QtGui.QTableWidgetItem(str(y)))
-                self.tableResult.setItem(i, T_VERT,
-                                         QtGui.QTableWidgetItem(str(i)))
+                if not self.data['vertices']:
+                    self.tableResult.setItem(i, T_VERT,
+                                            QtGui.QTableWidgetItem(str(i)))
+                else:
+                    v = self.data['vertices'][i]
+                    self.tableResult.setItem(i, T_VERT,
+                                            QtGui.QTableWidgetItem(str(v)))
             if self.data['angs']:
                 d1, m1, s1 = p.decdeg2dms(self.data['angs'][i])
-                a = "%d  %d  %s" % (int(d1), int(m1), "{0:.2f}".format(s1))
+                # a = "%d  %d  %s" % (int(d1), int(m1), "{0:.2f}".format(s1))
+                a = "%d  %d  %d" % (int(d1), int(m1), int(round(s1)))
                 self.tableResult.setItem(i, T_ANGS,
                                          QtGui.QTableWidgetItem(
                                              a.decode('utf-8')))
             if self.data['azimuths']:
                 d2, m2, s2 = p.decdeg2dms(self.data['azimuths'][i])
-                az = "%d  %d  %s" % (int(d2), int(m2), "{0:.2f}".format(s2))
+                az = "%d  %d  %d" % (int(d2), int(m2), int(round(s2)))
                 self.tableResult.setItem(i, T_AZIMUT,
                                          QtGui.QTableWidgetItem(
                                              az.decode('utf-8')))
@@ -192,6 +210,7 @@ class MainWindow(Ui_MainWindow):
             self.tableResult.removeRow(0)
 
     def data_empty(self):
+        self.data['vertices'] = []
         self.data['coords'] = []
         self.data['angs'] = []
         self.data['azimuths'] = []
@@ -200,7 +219,8 @@ class MainWindow(Ui_MainWindow):
         self.data['perim'] = 0
         self.data['sum_angs'] = 0
         self.data['plane_of'] = ''
-        self.data['proficient'] = 'Ing. COPA, Rodi Alfredo'
+        # self.data['proficient'] = 'Ing. COPA, Rodi Alfredo'
+        self.data['proficient'] = ''
         self.data['location'] = ''
         self.data['possession'] = ''
         self.data['homeowner'] = ''
@@ -222,10 +242,12 @@ class MainWindow(Ui_MainWindow):
                 self.data['filename'] = str(filename).strip()
             else:
                 self.data['filename'] = str(filename).strip() + '.json'
+            self.get_vertices()
             with open(self.data['filename'], 'w') as f:
                 json.dump(self.data, f)
 
     def save(self):
+        self.get_vertices()
         if self.data['filename']:
             with open(self.data['filename'], 'w') as f:
                 json.dump(self.data, f)
@@ -244,6 +266,7 @@ class MainWindow(Ui_MainWindow):
     def update_data(self):
         ui = NewTemplate()
 
+        ui.perito.setText(self.data['proficient'])
         ui.plane_of.setText(self.data['plane_of'])
         ui.location.setText(self.data['location'])
         ui.possession.setText(self.data['possession'])
@@ -262,6 +285,8 @@ class MainWindow(Ui_MainWindow):
     def data_from_dialog(self, ui):
         self.clear_table()
         self.data_empty()
+        self.data['proficient'] = str(ui.perito.text().toUtf8()).decode(
+            'utf-8')
         self.data['plane_of'] = str(ui.plane_of.text().toUtf8()).decode(
             'utf-8')
         self.data['location'] = str(ui.location.text().toUtf8()).decode(

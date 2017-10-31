@@ -3,6 +3,9 @@ src/icons_rc
 src/input
 src/output
 
+# VIM
+*.swp
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
